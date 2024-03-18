@@ -32,11 +32,11 @@ impl From<&str> for Grab {
         let mut g: i32 = 0;
         let mut b: i32 = 0;
 
-        let splits = value.split(",");
+        let splits = value.split(',');
         for split in splits {
             match split
                 .trim()
-                .split_once(" ")
+                .split_once(' ')
                 .map(|(num, color)| (i32::from_str(num).unwrap(), Color::from(color))) {
                 Some((x, Color::Red)) => r = x,
                 Some((x, Color::Green)) => g = x,
@@ -57,10 +57,10 @@ struct Game {
 
 impl From<&str> for Game {
     fn from(value: &str) -> Self {
-        let (game, grabs) = value.split_once(":").unwrap();
+        let (game, grabs) = value.split_once(':').unwrap();
         let id = usize::from_str(game.trim_start_matches("Game ")).unwrap();
         let grabs: Vec<Grab> = grabs
-            .split(";")
+            .split(';')
             .map(str::trim)
             .map(Grab::from)
             .collect();
@@ -94,7 +94,7 @@ fn filter_game(game: &Game) -> bool {
     )
 }
 
-fn make_minimal_grab(grabs: &Vec<Grab>) -> Grab {
+fn make_minimal_grab(grabs: &[Grab]) -> Grab {
     grabs.iter().fold(
         Grab{
             red: u16::MIN,
