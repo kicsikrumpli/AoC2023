@@ -5,11 +5,8 @@ fn read_input(_f: &str) -> Vec<String> {
     let f: File = File::open(_f).unwrap();
     let f: BufReader<File> = BufReader::new(f);
 
-    let lines = f
-        .lines()
-        .map(|line| line.unwrap()).collect();
-
-    return lines;
+    f.lines()
+        .map(|line| line.unwrap()).collect()
 }
 
 fn break_into_chars(lines: Vec<String>) -> Vec<Vec<char>> {
@@ -47,7 +44,7 @@ fn convert_number_words(lines: Vec<String>) -> Vec<String> {
         ("eight", '8'),
         ("nine", '9'),
     ];
-    fn convert_word(word: &String) -> String {
+    fn convert_word(word: &str) -> String {
         let mut acc: Vec<(char, usize)> = vec![];
 
         for (number_word, number_value) in NUMBERS {
@@ -59,7 +56,7 @@ fn convert_number_words(lines: Vec<String>) -> Vec<String> {
             acc.extend(f);
         }
 
-        for (idx, ch) in word.chars().into_iter().enumerate() {
+        for (idx, ch) in word.chars().enumerate() {
             if ch.is_numeric() {
                 acc.push((ch, idx));
             }
@@ -76,7 +73,7 @@ fn convert_number_words(lines: Vec<String>) -> Vec<String> {
 
     lines
         .iter()
-        .map(convert_word)
+        .map(|s| convert_word(s.as_ref()))
         .collect()
 }
 
